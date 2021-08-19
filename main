@@ -1,3 +1,12 @@
+import java.util.*;
+
+public class Main {
+    static Scanner sc = new Scanner(System.in);
+    static String[][] battlefield = new String[3][3];
+    static boolean gameOver = false;
+    static int turn = 1;
+    static String player = new String();
+
     public static void main(String[] args) {
         createBattlefield();
         printBattlefield();
@@ -6,3 +15,64 @@
             checkWinnerStatus(battlefield);
         }
     }
+
+    public static void createBattlefield() {
+        for (int i = 0; i < battlefield.length; i++) {
+            for (int j = 0; j < battlefield[0].length; j++) {
+                battlefield[i][j] = " ";
+            }
+        }
+    }
+
+    public static void checkWinnerStatus(String[][] arr) {
+        for (int i = 0; i < 3 && !gameOver; i++) {
+            if (arr[i][0].equals(player) && arr[i][1].equals(player) && arr[i][2].equals(player)
+             || arr[0][i].equals(player) && arr[1][i].equals(player) && arr[2][i].equals(player)
+             || arr[0][0].equals(player) && arr[1][1].equals(player) && arr[2][2].equals(player)
+             || arr[0][2].equals(player) && arr[1][1].equals(player) && arr[2][0].equals(player)) {
+                System.out.println(player + " wins");
+                gameOver = true;
+            }
+        }
+    }
+
+    public static void printBattlefield() {
+        System.out.println("---------");
+        for (int i = 0; i < 3; i++) {
+            System.out.println("| " + battlefield[i][0] + " " + battlefield[i][1] + " " + battlefield[i][2] + " |");
+        }
+        System.out.println("---------");
+    }
+
+    private static void gamePlay() {
+        int x, y;
+
+        if (turn == 10) {
+            System.out.print("Draw");
+            gameOver = true;
+            return;
+        }
+        String dotX = !sc.hasNextInt() ? sc.next() + "err" : sc.next();
+        String dotY = !sc.hasNextInt() ? sc.next() + "err" : sc.next();
+        System.out.println("Enter the coordinates: " + (dotX + " " + dotY).replace("err", ""));
+
+        if (dotX.contains("err") || dotY.contains("err")) {
+            System.out.println("You should enter numbers!");
+            return;
+        } else {
+            x = Integer.parseInt(dotX) - 1;
+            y = Integer.parseInt(dotY) - 1;
+        }
+
+        if (x < 0 || x > 2 || y < 0 || y > 2) {
+            System.out.println("Coordinates should be from 1 to 3!");
+        } else if (battlefield[x][y].contains("X") || battlefield[x][y].contains("O")) {
+            System.out.println("This cell is occupied! Choose another one!");
+        } else {
+            player = turn % 2 == 0 ? "O" : "X";
+            battlefield[x][y] = player;
+            printBattlefield();
+            turn++;
+        }
+    }
+}
