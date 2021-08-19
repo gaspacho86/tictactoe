@@ -1,0 +1,7 @@
+    public static void createBattlefield() {
+        for (int i = 0; i < battlefield.length; i++) {
+            for (int j = 0; j < battlefield[0].length; j++) {
+                battlefield[i][j] = " ";
+            }
+        }
+    }
