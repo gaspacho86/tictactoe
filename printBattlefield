@@ -1,0 +1,7 @@
+    public static void printBattlefield() {
+        System.out.println("---------");
+        for (int i = 0; i < 3; i++) {
+            System.out.println("| " + battlefield[i][0] + " " + battlefield[i][1] + " " + battlefield[i][2] + " |");
+        }
+        System.out.println("---------");
+    }
